@@ -1,0 +1,400 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { ChevronDown, ArrowLeft, X } from "lucide-react";
+
+interface ConsultationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function ConsultationModal({
+  isOpen,
+  onClose,
+}: ConsultationModalProps) {
+  const [step, setStep] = useState(1);
+  const [submissionStatus, setSubmissionStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    requirement: "",
+    budget: "",
+    possession: "",
+  });
+
+  const updateField = (field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleNext = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.phone) {
+      return;
+    }
+
+    setStep(2);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmissionStatus("submitting");
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          location: "To be discussed",
+          propertyType: formData.requirement,
+          interiorRequirement: formData.requirement,
+          propertySize: "To be discussed",
+          budget: formData.budget,
+          timeline: formData.possession,
+          message: "Request for a free interior design consultation.",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Lead submission failed");
+      }
+
+      setSubmissionStatus("success");
+
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
+    } catch (error) {
+      console.error("Consultation request error:", error);
+      setSubmissionStatus("error");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setStep(1);
+    setSubmissionStatus("idle");
+    setFormData({
+      name: "",
+      phone: "",
+      requirement: "",
+      budget: "",
+      possession: "",
+    });
+    onClose();
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+        onClick={handleCloseModal}
+      />
+
+      {/* Modal */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="consultation-modal-title"
+        className="fixed left-1/2 top-1/2 z-50 w-full max-w-[450px] -translate-x-1/2 -translate-y-1/2 p-4"
+      >
+        <div className="rounded-3xl bg-white p-6 shadow-2xl sm:p-8 md:p-9">
+          {/* Close button */}
+          <button
+            onClick={handleCloseModal}
+            className="absolute right-6 top-6 text-black/40 transition-colors hover:text-black/60 sm:right-8 sm:top-8"
+            aria-label="Close modal"
+          >
+            <X size={24} />
+          </button>
+
+          {/* FORM HEADER */}
+          <div className="mb-7 pr-8">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-black/40">
+                Consultation request
+              </span>
+
+              <span className="text-xs text-black/35">Step 0{step} of 02</span>
+            </div>
+
+            <h2
+              id="consultation-modal-title"
+              className="text-2xl font-medium tracking-[-0.03em] text-black sm:text-3xl"
+            >
+              Design your space with confidence
+            </h2>
+
+            <p className="mt-3 text-sm leading-6 text-black/50">
+              Tell us a little about your project and our design team will get
+              in touch to arrange your complimentary consultation.
+            </p>
+          </div>
+
+          {submissionStatus === "success" ? (
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-6 text-center">
+              <h3 className="text-lg font-medium text-emerald-950">
+                Thank you for getting in touch
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-emerald-900/70">
+                Your consultation request has been sent to our team. We will
+                contact you shortly.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* =====================
+                  STEP 1
+              ====================== */}
+              {step === 1 && (
+                <form onSubmit={handleNext} className="space-y-5">
+                  {/* NAME */}
+                  <div>
+                    <label
+                      htmlFor="modal-name"
+                      className="mb-2 block text-xs font-medium text-black/60"
+                    >
+                      Name
+                    </label>
+
+                    <input
+                      id="modal-name"
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => updateField("name", e.target.value)}
+                      placeholder="Enter your name"
+                      required
+                      className="h-14 w-full rounded-xl border border-black/10 bg-[#fafafa] px-4 text-sm text-black outline-none transition-all placeholder:text-black/30 focus:border-black/30 focus:bg-white"
+                    />
+                  </div>
+
+                  {/* PHONE */}
+                  <div>
+                    <label
+                      htmlFor="modal-phone"
+                      className="mb-2 block text-xs font-medium text-black/60"
+                    >
+                      Phone Number
+                    </label>
+
+                    <div className="flex h-14 overflow-hidden rounded-xl border border-black/10 bg-[#fafafa] transition-all focus-within:border-black/30 focus-within:bg-white">
+                      <div className="flex items-center border-r border-black/10 px-4 text-sm text-black/60">
+                        +91
+                      </div>
+
+                      <input
+                        id="modal-phone"
+                        type="tel"
+                        inputMode="numeric"
+                        maxLength={10}
+                        value={formData.phone}
+                        onChange={(e) =>
+                          updateField(
+                            "phone",
+                            e.target.value.replace(/\D/g, ""),
+                          )
+                        }
+                        placeholder="Enter phone number"
+                        required
+                        className="h-full flex-1 bg-transparent px-4 text-sm text-black outline-none placeholder:text-black/30"
+                      />
+                    </div>
+                  </div>
+
+                  {/* NEXT */}
+                  <button
+                    type="submit"
+                    className="group flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-black text-sm font-medium text-white transition-all duration-300 hover:bg-[#222]"
+                  >
+                    Next
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </button>
+                </form>
+              )}
+
+              {/* =====================
+                  STEP 2
+              ====================== */}
+              {step === 2 && (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* BACK */}
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="mb-2 flex items-center gap-2 text-xs text-black/45 transition-colors hover:text-black"
+                  >
+                    <ArrowLeft size={14} />
+                    Back
+                  </button>
+
+                  {/* REQUIREMENT */}
+                  <div className="relative">
+                    <label
+                      htmlFor="modal-requirement"
+                      className="mb-2 block text-xs font-medium text-black/60"
+                    >
+                      What is your interior requirement?
+                    </label>
+
+                    <div className="relative">
+                      <select
+                        id="modal-requirement"
+                        value={formData.requirement}
+                        onChange={(e) =>
+                          updateField("requirement", e.target.value)
+                        }
+                        required
+                        className="h-14 w-full appearance-none rounded-xl border border-black/10 bg-[#fafafa] px-4 pr-12 text-sm text-black outline-none transition-all focus:border-black/30 focus:bg-white"
+                      >
+                        <option value="">Select requirement</option>
+                        <option value="2bhk">2 BHK</option>
+                        <option value="3bhk">3 BHK</option>
+                        <option value="4bhk">4 BHK</option>
+                        <option value="villa">Villa</option>
+                        <option value="office">Office</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="renovation">Renovation</option>
+                      </select>
+
+                      <ChevronDown
+                        size={18}
+                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-black/40"
+                      />
+                    </div>
+                  </div>
+
+                  {/* BUDGET */}
+                  <div className="relative">
+                    <label
+                      htmlFor="modal-budget"
+                      className="mb-2 block text-xs font-medium text-black/60"
+                    >
+                      Your Approx. Interior Budget?
+                    </label>
+
+                    <div className="relative">
+                      <select
+                        id="modal-budget"
+                        value={formData.budget}
+                        onChange={(e) => updateField("budget", e.target.value)}
+                        required
+                        className="h-14 w-full appearance-none rounded-xl border border-black/10 bg-[#fafafa] px-4 pr-12 text-sm text-black outline-none transition-all focus:border-black/30 focus:bg-white"
+                      >
+                        <option value="">Select budget (Min. ₹2 Lacs)</option>
+                        <option value="2-5">₹2 – ₹5 Lacs</option>
+                        <option value="5-10">₹5 – ₹10 Lacs</option>
+                        <option value="10-20">₹10 – ₹20 Lacs</option>
+                        <option value="20-30">₹20 – ₹30 Lacs</option>
+                        <option value="30+">₹30+ Lacs</option>
+                      </select>
+
+                      <ChevronDown
+                        size={18}
+                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-black/40"
+                      />
+                    </div>
+                  </div>
+
+                  {/* POSSESSION */}
+                  <div className="relative">
+                    <label
+                      htmlFor="modal-possession"
+                      className="mb-2 block text-xs font-medium text-black/60"
+                    >
+                      Do you have possession of property?
+                    </label>
+
+                    <div className="relative">
+                      <select
+                        id="modal-possession"
+                        value={formData.possession}
+                        onChange={(e) =>
+                          updateField("possession", e.target.value)
+                        }
+                        required
+                        className="h-14 w-full appearance-none rounded-xl border border-black/10 bg-[#fafafa] px-4 pr-12 text-sm text-black outline-none transition-all focus:border-black/30 focus:bg-white"
+                      >
+                        <option value="">Select option</option>
+                        <option value="yes">Yes, I have possession</option>
+                        <option value="soon">Possession soon</option>
+                        <option value="not-yet">Not yet</option>
+                      </select>
+
+                      <ChevronDown
+                        size={18}
+                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-black/40"
+                      />
+                    </div>
+                  </div>
+
+                  {/* SUBMIT */}
+                  <button
+                    type="submit"
+                    disabled={submissionStatus === "submitting"}
+                    className="group mt-2 flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-black text-sm font-medium text-white transition-all duration-300 hover:bg-[#222] disabled:opacity-60"
+                  >
+                    {submissionStatus === "submitting"
+                      ? "Sending request..."
+                      : "Request my consultation"}
+
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </button>
+                  {submissionStatus === "error" && (
+                    <p className="text-center text-xs text-red-600">
+                      We couldn&apos;t send your request. Please try again.
+                    </p>
+                  )}
+                </form>
+              )}
+            </>
+          )}
+
+          {/* PRIVACY */}
+          <p className="mt-5 text-[9px] leading-4 text-black/35">
+            By submitting this form, you agree to our{" "}
+            <a
+              href="/privacy"
+              className="font-medium text-black/55 underline underline-offset-2"
+            >
+              privacy policy
+            </a>{" "}
+            &{" "}
+            <a
+              href="/terms"
+              className="font-medium text-black/55 underline underline-offset-2"
+            >
+              terms and conditions
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}
