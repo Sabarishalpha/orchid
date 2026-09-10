@@ -175,7 +175,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Experience badge */}
-                <div className="absolute -bottom-8 left-6 z-30 flex h-24 w-24 items-center justify-center rounded-full bg-black text-center text-white shadow-xl sm:-bottom-10 sm:left-8 sm:h-28 sm:w-28">
+                {/* <div className="absolute -bottom-8 left-6 z-30 flex h-24 w-24 items-center justify-center rounded-full bg-black text-center text-white shadow-xl sm:-bottom-10 sm:left-8 sm:h-28 sm:w-28">
                   <div>
                     <p className="text-2xl font-light">10+</p>
                     <p className="mt-1 text-[9px] tracking-[0.15em] text-stone-400 uppercase">
@@ -183,7 +183,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* CONTENT SIDE */}
               <div className="relative">
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* Founder stats */}
-                <div className="mt-12 grid max-w-xl grid-cols-3 border-t border-stone-300 pt-7">
+                {/* <div className="mt-12 grid max-w-xl grid-cols-3 border-t border-stone-300 pt-7">
                   <div>
                     <p className="text-2xl font-light text-black sm:text-3xl">
                       10+
@@ -263,7 +263,7 @@ export default function AboutPage() {
                     <p className="mt-2 text-[10px] tracking-[0.15em] text-stone-500 uppercase">
                       Cities
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
