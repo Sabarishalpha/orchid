@@ -73,6 +73,7 @@ export default function FeaturedProjects() {
 
   const touchStartX = useRef<number | null>(null);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const transitionRef = useRef<gsap.core.Timeline | null>(null);
 
   const activeProject = projects[activeIndex];
 
@@ -95,10 +96,13 @@ export default function FeaturedProjects() {
 
       const timeline = gsap.timeline({
         onComplete: () => {
+          transitionRef.current = null;
           setActiveIndex(newIndex);
           setIsAnimating(false);
         },
       });
+      transitionRef.current?.kill();
+      transitionRef.current = timeline;
 
       /*
        * Current image leaves
@@ -131,7 +135,7 @@ export default function FeaturedProjects() {
           duration: 1,
           ease: "power3.out",
         },
-        "-=0.45"
+        "-=0.45",
       );
 
       /*
@@ -148,7 +152,7 @@ export default function FeaturedProjects() {
             stagger: 0.03,
             ease: "power2.in",
           },
-          "-=0.8"
+          "-=0.8",
         )
         .to(
           contentRef.current.children,
@@ -159,10 +163,10 @@ export default function FeaturedProjects() {
             stagger: 0.06,
             ease: "power3.out",
           },
-          "-=0.05"
+          "-=0.05",
         );
     },
-    [activeIndex, isAnimating]
+    [activeIndex, isAnimating],
   );
 
   /*
@@ -177,8 +181,7 @@ export default function FeaturedProjects() {
   }, [activeIndex, changeSlide]);
 
   const previousSlide = useCallback(() => {
-    const previousIndex =
-      (activeIndex - 1 + projects.length) % projects.length;
+    const previousIndex = (activeIndex - 1 + projects.length) % projects.length;
 
     changeSlide(previousIndex, -1);
   }, [activeIndex, changeSlide]);
@@ -270,7 +273,10 @@ export default function FeaturedProjects() {
    */
 
   useEffect(() => {
-    imageRefs.current.forEach((image, index) => {
+    const mountedImages = imageRefs.current;
+    const mountedContent = contentRef.current;
+
+    mountedImages.forEach((image, index) => {
       if (!image) return;
 
       gsap.set(image, {
@@ -279,6 +285,13 @@ export default function FeaturedProjects() {
         xPercent: 0,
       });
     });
+
+    return () => {
+      transitionRef.current?.kill();
+      transitionRef.current = null;
+      mountedImages.forEach((image) => image && gsap.killTweensOf(image));
+      if (mountedContent) gsap.killTweensOf(mountedContent.children);
+    };
   }, []);
 
   return (
@@ -331,7 +344,6 @@ export default function FeaturedProjects() {
                 src={project.image}
                 alt={project.title}
                 fill
-                priority={index === 0}
                 sizes="100vw"
                 className="
                   object-cover
@@ -499,7 +511,6 @@ export default function FeaturedProjects() {
             >
               <span className="relative">
                 View Project
-
                 <span
                   className="
                     absolute
@@ -743,19 +754,13 @@ export default function FeaturedProjects() {
             <button
               key={project.id}
               type="button"
-              onClick={() =>
-                changeSlide(index, index > activeIndex ? 1 : -1)
-              }
+              onClick={() => changeSlide(index, index > activeIndex ? 1 : -1)}
               aria-label={`Go to project ${index + 1}`}
               className={`
                 h-[2px]
                 transition-all
                 duration-500
-                ${
-                  activeIndex === index
-                    ? "w-7 bg-white"
-                    : "w-2 bg-white/40"
-                }
+                ${activeIndex === index ? "w-7 bg-white" : "w-2 bg-white/40"}
               `}
             />
           ))}

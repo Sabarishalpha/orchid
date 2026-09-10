@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useConsultationModal } from "./ConsultationModalProvider";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -16,6 +17,7 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { openModal } = useConsultationModal();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -281,8 +283,8 @@ export default function Navbar() {
           ================================================= */}
 
           <div className="hidden items-center md:flex">
-            <Link
-              href="/contact"
+            <button
+              onClick={openModal}
               className="
                 group
                 flex
@@ -299,9 +301,10 @@ export default function Navbar() {
                 duration-300
                 hover:bg-black
                 hover:shadow-[0_10px_25px_rgba(0,0,0,0.18)]
+                cursor-pointer
               "
             >
-              <span>Start a Project</span>
+              <span>Talk to an Expert</span>
 
               <span
                 className="
@@ -319,7 +322,7 @@ export default function Navbar() {
               >
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
-            </Link>
+            </button>
           </div>
 
           {/* =================================================
@@ -465,11 +468,14 @@ export default function Navbar() {
 
               {/* Mobile CTA */}
 
-              <Link
-                href="/contact"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => {
+                  openModal();
+                  setIsMenuOpen(false);
+                }}
                 className="
                   group
+                  w-full
                   flex
                   items-center
                   justify-between
@@ -481,6 +487,8 @@ export default function Navbar() {
                   transition-all
                   duration-300
                   hover:bg-[#f0eee9]
+                  cursor-pointer
+                  text-left
                 "
               >
                 <div>
@@ -496,7 +504,7 @@ export default function Navbar() {
                   </p>
 
                   <p className="mt-1 text-[18px] font-medium">
-                    Start a Project
+                    Talk to an Expert
                   </p>
                 </div>
 
@@ -505,6 +513,7 @@ export default function Navbar() {
                     flex
                     h-9
                     w-9
+                    shrink-0
                     items-center
                     justify-center
                     rounded-full
@@ -517,7 +526,7 @@ export default function Navbar() {
                 >
                   <ArrowUpRight className="h-4 w-4" />
                 </span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>

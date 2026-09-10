@@ -6,8 +6,9 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ImageGallery from "../../components/ImageGallery";
+import { notFound } from "next/navigation";
 
-import { PROJECTS } from "../../data/projects";
+import { PROJECTS, resolveProjectAsset } from "../../data/projects";
 
 type ProjectPageProps = {
   params: Promise<{
@@ -44,6 +45,13 @@ export async function generateMetadata({
     description: project
       ? `${project.category} interiors by Orchid Interiors in ${project.location}.`
       : "Selected work by Orchid Interiors.",
+    alternates: { canonical: `/projects/${slug}` },
+    openGraph: project
+      ? { images: [resolveProjectAsset(project.image)] }
+      : undefined,
+    twitter: project
+      ? { images: [resolveProjectAsset(project.image)] }
+      : undefined,
   };
 }
 
@@ -57,7 +65,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const project = PROJECTS.find((item) => item.slug === slug);
 
   if (!project) {
-    return null;
+    notFound();
   }
 
   return (
@@ -68,7 +76,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
       <Navbar />
 
-      <main className="bg-stone-50 pt-24">
+      <main className="bg-stone-50 pt-16">
         {/* ==================================================
             PROJECT HERO
         ================================================== */}
@@ -78,12 +86,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             mx-auto
             max-w-7xl
             px-4
-            py-12
+            py-8
             sm:px-6
             md:px-10
-            md:py-20
+            md:py-12
             lg:px-16
-            lg:py-24
+            lg:py-16
           "
         >
           {/* Back to Projects */}
@@ -201,7 +209,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               "
             >
               <Image
-                src={project.image}
+                src={resolveProjectAsset(project.image)}
                 alt={`${project.title}, ${project.location}`}
                 fill
                 priority
@@ -225,11 +233,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             border-stone-300
             bg-white
             px-4
-            py-16
+            py-12
             sm:px-6
             md:px-10
             lg:px-16
-            lg:py-20
+            lg:py-16
           "
         >
           <div
@@ -304,11 +312,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             className="
                 bg-stone-50
                 px-4
-                py-16
+                py-12
                 sm:px-6
                 md:px-10
                 lg:px-16
-                lg:py-24
+                lg:py-16
               "
           >
             <div className="mx-auto max-w-7xl">
@@ -391,7 +399,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                     INTERACTIVE IMAGE GALLERY
                 ================================================== */}
 
-              <ImageGallery images={project.gallery} title={project.title} />
+              <ImageGallery
+                images={project.gallery.map(resolveProjectAsset)}
+                title={project.title}
+              />
             </div>
           </section>
         )}

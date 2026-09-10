@@ -16,19 +16,19 @@ gsap.registerPlugin(ScrollTrigger);
 const videos = [
   {
     desktop: "/videos/orchid-interiors-landscape.mp4",
-    mobile: "/videos/orchid-interiors-mobile-1.mp4",
+    mobile: "/videos/orchid-interiors-mobile.mp4",
     title: "Every detail tells a story.",
     category: "Design · Craft · Detail",
   },
   {
-    desktop: "/videos/orchid-interiors-landscape-2.mp4",
-    mobile: "/videos/orchid-interiors-mobile-2.mp4",
+    desktop: "/videos/orchid-interiors-landscape.mp4",
+    mobile: "/videos/orchid-interiors-mobile.mp4",
     title: "Spaces designed around you.",
     category: "Space · Form · Living",
   },
   {
-    desktop: "/videos/orchid-interiors-landscape-3.mp4",
-    mobile: "/videos/orchid-interiors-mobile-3.mp4",
+    desktop: "/videos/orchid-interiors-landscape.mp4",
+    mobile: "/videos/orchid-interiors-mobile.mp4",
     title: "Where craftsmanship meets comfort.",
     category: "Material · Texture · Craft",
   },
@@ -40,6 +40,7 @@ export default function VideoShowcase() {
   const desktopVideoRef = useRef<HTMLVideoElement>(null);
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const transitionRef = useRef<gsap.core.Tween | null>(null);
 
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
@@ -121,7 +122,8 @@ export default function VideoShowcase() {
 
     if (!video) return;
 
-    gsap.to(video, {
+    transitionRef.current?.kill();
+    transitionRef.current = gsap.to(video, {
       opacity: 0,
       x: direction === "next" ? -30 : 30,
       duration: 0.25,
@@ -148,9 +150,17 @@ export default function VideoShowcase() {
             ease: "power3.out",
           },
         );
+        transitionRef.current = null;
       },
     });
   };
+
+  useLayoutEffect(() => {
+    return () => {
+      transitionRef.current?.kill();
+      transitionRef.current = null;
+    };
+  }, []);
 
   /* ------------------------------------------
      MUTE / UNMUTE
@@ -177,10 +187,10 @@ export default function VideoShowcase() {
       ref={sectionRef}
       className="
         relative w-full overflow-hidden bg-[#11100e]
-        px-3 py-20
-        sm:px-5 sm:py-24
-        md:px-8 md:py-28
-        lg:px-12 lg:py-32
+        px-3 py-14
+        sm:px-5 sm:py-16
+        md:px-8 md:py-20
+        lg:px-12 lg:py-24
         xl:px-16
       "
     >
@@ -192,9 +202,9 @@ export default function VideoShowcase() {
         <div
           ref={contentRef}
           className="
-            mb-10 flex flex-col justify-between gap-8
-            md:mb-14 md:flex-row md:items-end
-            lg:mb-16
+            mb-8 flex flex-col justify-between gap-6
+            md:mb-10 md:flex-row md:items-end
+            lg:mb-12
           "
         >
           {/* LEFT */}

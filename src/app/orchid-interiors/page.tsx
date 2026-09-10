@@ -117,7 +117,7 @@ export default function OrchidInteriorsLandingPage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/65" />
-        <div className="relative mx-auto grid min-h-[850px] max-w-7xl items-end gap-12 px-5 pb-14 pt-32 sm:px-8 sm:pb-20 lg:grid-cols-[1fr_430px] lg:items-center lg:px-12 lg:pb-10">
+        <div className="relative mx-auto grid min-h-[720px] max-w-7xl items-end gap-8 px-5 pb-12 pt-24 sm:px-8 sm:pb-16 lg:grid-cols-[1fr_430px] lg:items-center lg:px-12 lg:pb-8">
           <div className="max-w-2xl">
             <p className="mb-6 text-xs tracking-[0.3em] text-white/70 uppercase">
               Premium interior design for modern living
@@ -190,7 +190,7 @@ export default function OrchidInteriorsLandingPage() {
 
       <section
         id="reels"
-        className="bg-white px-5 py-20 sm:px-8 md:py-28 lg:px-12"
+        className="bg-white px-5 py-14 sm:px-8 md:py-20 lg:px-12"
         aria-labelledby="reels-title"
       >
         <div className="mx-auto max-w-7xl">
@@ -245,7 +245,7 @@ export default function OrchidInteriorsLandingPage() {
       </section>
 
       <section
-        className="bg-black px-5 py-20 text-white sm:px-8 md:py-28 lg:px-12"
+        className="bg-black px-5 py-14 text-white sm:px-8 md:py-20 lg:px-12"
         aria-labelledby="projects-title"
       >
         <div className="mx-auto max-w-7xl">
@@ -309,7 +309,7 @@ export default function OrchidInteriorsLandingPage() {
 
       <section
         id="process"
-        className="bg-white px-5 py-20 sm:px-8 md:py-28 lg:px-12"
+        className="bg-white px-5 py-14 sm:px-8 md:py-20 lg:px-12"
         aria-labelledby="process-title"
       >
         <div className="mx-auto max-w-7xl">
@@ -357,7 +357,7 @@ export default function OrchidInteriorsLandingPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-black px-5 py-20 text-white sm:px-8 md:py-28 lg:px-12">
+      <section className="relative overflow-hidden bg-black px-5 py-14 text-white sm:px-8 md:py-20 lg:px-12">
         <div className="relative mx-auto max-w-7xl">
           <p className="text-xs tracking-[0.25em] text-white/60 uppercase">
             Ready when you are
@@ -379,7 +379,7 @@ export default function OrchidInteriorsLandingPage() {
         </div>
       </section>
 
-      <footer className="bg-black px-5 py-12 text-white sm:px-8 lg:px-12">
+      <footer className="bg-black px-5 py-10 text-white sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="text-sm tracking-[0.28em] uppercase">

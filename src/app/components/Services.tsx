@@ -5,7 +5,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SERVICES } from "../data/services";
 
-export default function Services() {
+type ServicesProps = {
+  showAll?: boolean;
+};
+
+export default function Services({ showAll = false }: ServicesProps) {
+  const visibleServices = showAll ? SERVICES : SERVICES.slice(0, 3);
+
   return (
     <section
       id="services"
@@ -16,13 +22,13 @@ export default function Services() {
         overflow-hidden
         bg-stone-50
         px-4
-        py-20
+        py-14
         sm:px-6
-        sm:py-24
+        sm:py-16
         md:px-8
-        md:py-28
+        md:py-20
         lg:px-12
-        lg:py-32
+        lg:py-24
         xl:px-16
       "
     >
@@ -31,18 +37,17 @@ export default function Services() {
       ====================================================== */}
 
       <div className="mx-auto max-w-[1600px]">
-
         {/* =====================================================
             SECTION INTRODUCTION
         ====================================================== */}
 
         <div
           className="
-            mb-14
+            mb-10
             text-center
-            sm:mb-16
-            md:mb-20
-            lg:mb-24
+            sm:mb-12
+            md:mb-14
+            lg:mb-16
           "
         >
           {/* Label */}
@@ -119,12 +124,11 @@ export default function Services() {
             sm:gap-6
             lg:grid-cols-3
             lg:gap-7
-            xl:grid-cols-5
-            xl:gap-6
-            2xl:gap-8
+            xl:grid-cols-3
+            xl:gap-8
           "
         >
-          {SERVICES.map((service, index) => (
+          {visibleServices.map((service, index) => (
             <Link
               key={index}
               href={`/services/${service.slug}`}
@@ -160,8 +164,7 @@ export default function Services() {
                   sm:h-64
                   md:h-72
                   lg:h-80
-                  xl:h-72
-                  2xl:h-80
+                  xl:h-80
                 "
               >
                 <Image
@@ -178,8 +181,7 @@ export default function Services() {
                   sizes="
                     (max-width: 640px) 100vw,
                     (max-width: 1024px) 50vw,
-                    (max-width: 1536px) 33vw,
-                    20vw
+                    33vw
                   "
                 />
 
@@ -224,7 +226,6 @@ export default function Services() {
                 {/* Top Content */}
 
                 <div className="flex w-full flex-col items-center">
-
                   {/* Number */}
 
                   <span
@@ -318,6 +319,18 @@ export default function Services() {
             </Link>
           ))}
         </div>
+
+        {!showAll && (
+          <div className="mt-10 flex justify-center sm:mt-12">
+            <Link
+              href="/services"
+              className="group inline-flex items-center gap-3 border border-black bg-black px-6 py-3 text-sm font-medium text-white transition-colors duration-300 hover:bg-white hover:text-black"
+            >
+              Show All Services
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

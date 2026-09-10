@@ -1,9 +1,9 @@
 export const SERVICES = [
   {
     number: "01",
-    slug: "interior-design",
-    title: "Interior Design",
-    description: "Complete interior concepts shaped around your lifestyle.",
+    slug: "modular-kitchen",
+    title: "Modular Kitchen",
+    description: "Thoughtful modular kitchens designed for everyday living.",
     image: "/images/hero-1.png",
     gallery: [
       "/images/hero-1.png",
@@ -18,13 +18,13 @@ export const SERVICES = [
       "/images/about-4.jpeg",
     ],
     detail:
-      "From the first conversation to the final styling touch, we shape complete interiors around the way you live, move and gather.",
+      "We design practical, elegant modular kitchens with considered storage, durable finishes and a layout that makes daily routines feel effortless.",
   },
   {
     number: "02",
-    slug: "residential-interiors",
-    title: "Residential Interiors",
-    description: "Personalized homes designed for comfort and character.",
+    slug: "bed-room",
+    title: "Bed Room",
+    description: "Calm, personal bedrooms designed for comfort and rest.",
     image: "/images/about-2.jpeg",
     gallery: [
       "/images/about-2.jpeg",
@@ -39,13 +39,13 @@ export const SERVICES = [
       "/images/hero.jpeg",
     ],
     detail:
-      "We create warm, personal homes with considered layouts, tactile materials and details that reflect your everyday rituals.",
+      "From wardrobes and lighting to material palettes and soft details, we create bedrooms that feel personal, restful and beautifully resolved.",
   },
   {
     number: "03",
-    slug: "commercial-interiors",
-    title: "Commercial Interiors",
-    description: "Purpose-driven workspaces designed to elevate your brand.",
+    slug: "living-room",
+    title: "Living Room",
+    description: "Inviting living spaces shaped around how you gather.",
     image: "/images/projects/3.jpeg",
     gallery: [
       "/images/projects/3.jpeg",
@@ -60,13 +60,13 @@ export const SERVICES = [
       "/images/about.png",
     ],
     detail:
-      "Purpose-driven commercial spaces that support your team, express your brand and create a memorable experience for every visitor.",
+      "We balance seating, lighting, storage and statement details to create living rooms that welcome conversation and reflect your style.",
   },
   {
     number: "04",
-    slug: "space-planning",
-    title: "Space Planning",
-    description: "Intelligent layouts that maximize functionality and balance.",
+    slug: "dining",
+    title: "Dining",
+    description: "Refined dining settings made for everyday moments.",
     image: "/images/hero-4.png",
     gallery: [
       "/images/hero-4.png",
@@ -81,13 +81,13 @@ export const SERVICES = [
       "/images/about.png",
     ],
     detail:
-      "Intelligent planning brings balance to every room, making the most of light, movement, storage and the way each space needs to work.",
+      "Thoughtful proportions, lighting and storage come together in dining spaces that feel warm, considered and ready for gathering.",
   },
   {
     number: "05",
-    slug: "custom-furniture",
-    title: "Custom Furniture",
-    description: "Bespoke furniture pieces crafted to complement your space.",
+    slug: "pooja-unit",
+    title: "Pooja Unit",
+    description: "Serene pooja units designed with care and intention.",
     image: "/images/projects/5.png",
     gallery: [
       "/images/projects/5.png",
@@ -102,6 +102,90 @@ export const SERVICES = [
       "/images/about.png",
     ],
     detail:
-      "Bespoke furniture designed in proportion to your space, then crafted with materials and finishes chosen to last beautifully.",
+      "We create beautifully proportioned pooja units that bring together craftsmanship, lighting, storage and a sense of quiet focus.",
+  },
+  {
+    number: "06",
+    slug: "office-workstation",
+    title: "Office & Workstation",
+    description: "Productive workspaces with clarity, comfort and character.",
+    image: "/images/projects/3.jpeg",
+    gallery: [
+      "/images/projects/3.jpeg",
+      "/images/projects/4.png",
+      "/images/hero-3.png",
+      "/images/projects/5.png",
+      "/images/about-3.jpeg",
+      "/images/hero-4.png",
+      "/images/projects/6.png",
+      "/images/about-5.jpeg",
+      "/images/hero.jpeg",
+      "/images/about.png",
+    ],
+    detail:
+      "From private offices to collaborative workstations, we shape efficient, comfortable environments that support focus and reflect your organisation.",
+  },
+  {
+    number: "07",
+    slug: "aluminium-doors-partitions",
+    title: "Aluminium Doors & Partitions",
+    description: "Clean, durable divisions that bring structure and light.",
+    image: "/images/hero-4.png",
+    gallery: [
+      "/images/hero-4.png",
+      "/images/about-4.jpeg",
+      "/images/projects/4.png",
+      "/images/about-1.jpeg",
+      "/images/hero-1.png",
+      "/images/projects/1.png",
+      "/images/about-5.jpeg",
+      "/images/hero-2.png",
+      "/images/projects/6.png",
+      "/images/about.png",
+    ],
+    detail:
+      "We specify and design aluminium doors and partitions that divide spaces elegantly while preserving light, flow and a contemporary finish.",
+  },
+  {
+    number: "08",
+    slug: "institutions",
+    title: "Institutions",
+    description: "Purposeful interiors for learning and public environments.",
+    image: "/images/projects/4.png",
+    gallery: [
+      "/images/projects/4.png",
+      "/images/projects/5.png",
+      "/images/hero-3.png",
+      "/images/projects/6.png",
+      "/images/about-3.jpeg",
+      "/images/hero-4.png",
+      "/images/about-5.jpeg",
+      "/images/hero.jpeg",
+      "/images/projects/3.jpeg",
+      "/images/about.png",
+    ],
+    detail:
+      "Our institutional interiors are planned for durability, accessibility and clear movement, creating environments that serve people well over time.",
+  },
+  {
+    number: "09",
+    slug: "hospitality",
+    title: "Hospitality",
+    description: "Memorable guest environments with a distinct sense of place.",
+    image: "/images/hero-3.png",
+    gallery: [
+      "/images/hero-3.png",
+      "/images/projects/3.jpeg",
+      "/images/projects/4.png",
+      "/images/about-3.jpeg",
+      "/images/hero-4.png",
+      "/images/projects/5.png",
+      "/images/about-5.jpeg",
+      "/images/hero.jpeg",
+      "/images/projects/6.png",
+      "/images/about.png",
+    ],
+    detail:
+      "From arrival to final detail, we create hospitality spaces that feel distinctive, welcoming and aligned with the experience you want guests to remember.",
   },
 ] as const;

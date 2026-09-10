@@ -32,20 +32,21 @@ export const metadata: Metadata = {
   title: "About Our Interior Design Studio",
   description:
     "Meet Orchid Interiors, a thoughtful interior design studio creating refined residential and commercial spaces in Coimbatore and Tamil Nadu.",
+  alternates: { canonical: "/about" },
+  openGraph: { url: "/about", images: ["/images/about-1.jpeg"] },
+  twitter: { images: ["/images/about-1.jpeg"] },
 };
 
 const teamMembers = [
   {
     name: "Aarav Menon",
     role: "Creative Director",
-    focus:
-      "Concept, identity and the emotional language of each space.",
+    focus: "Concept, identity and the emotional language of each space.",
   },
   {
     name: "Meera Iyer",
     role: "Design Lead",
-    focus:
-      "Material palettes, detailing and the rhythm between rooms.",
+    focus: "Material palettes, detailing and the rhythm between rooms.",
   },
   {
     name: "Rohan Shah",
@@ -86,10 +87,10 @@ export default function AboutPage() {
       <About />
 
       {/* OUR STORY */}
-      <section className="relative w-full bg-stone-50 px-4 py-20 sm:px-6 md:px-10 lg:px-16">
+      <section className="relative w-full bg-stone-50 px-4 py-14 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-16">
         <div className="mx-auto max-w-7xl">
           <div>
-            <div className="mb-12 text-center">
+            <div className="mb-8 text-center">
               <p className="mb-4 text-xs font-medium tracking-[0.32em] text-stone-600 uppercase">
                 OUR STORY
               </p>
@@ -126,8 +127,8 @@ export default function AboutPage() {
           {/* =========================================================
               FOUNDER & CEO
           ========================================================== */}
-          <section className="relative mt-28 border-t border-stone-300 pt-20 sm:mt-32 sm:pt-24">
-            <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+          <section className="relative mt-14 border-t border-stone-300 pt-12 sm:mt-16 sm:pt-16">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
               {/* IMAGE SIDE */}
               <div className="relative">
                 {/* Decorative background */}
@@ -193,9 +194,7 @@ export default function AboutPage() {
                 <h2 className="max-w-2xl text-4xl font-light leading-[1.05] tracking-tight text-black sm:text-5xl lg:text-6xl">
                   Designing with purpose.
                   <br />
-                  <span className="text-stone-400">
-                    Building with belief.
-                  </span>
+                  <span className="text-stone-400">Building with belief.</span>
                 </h2>
 
                 <div className="mt-8 h-px w-16 bg-black" />
@@ -216,9 +215,9 @@ export default function AboutPage() {
 
                 <p className="mt-5 max-w-xl text-base leading-8 text-stone-700">
                   With a deep appreciation for architecture, materials and
-                  craftsmanship, our founder continues to guide Orchid
-                  Interiors with a focus on thoughtful design, honest
-                  execution and long-lasting relationships.
+                  craftsmanship, our founder continues to guide Orchid Interiors
+                  with a focus on thoughtful design, honest execution and
+                  long-lasting relationships.
                 </p>
 
                 {/* Quote */}
@@ -228,8 +227,8 @@ export default function AboutPage() {
                   </span>
 
                   <blockquote className="text-lg font-light leading-8 text-black sm:text-xl">
-                    We don&apos;t simply design rooms. We create environments that
-                    become part of people&apos;s everyday stories.
+                    We don&apos;t simply design rooms. We create environments
+                    that become part of people&apos;s everyday stories.
                   </blockquote>
 
                   <p className="mt-4 text-xs tracking-[0.2em] text-stone-500 uppercase">
@@ -273,8 +272,8 @@ export default function AboutPage() {
           {/* =========================================================
               TEAM
           ========================================================== */}
-          <div className="mt-32 border-t border-stone-300 pt-20 sm:mt-36 sm:pt-24">
-            <div className="mb-12 max-w-2xl">
+          <div className="mt-16 border-t border-stone-300 pt-12 sm:mt-20 sm:pt-16">
+            <div className="mb-8 max-w-2xl">
               <p className="mb-4 text-xs font-medium tracking-[0.32em] text-stone-600 uppercase">
                 THE TEAM
               </p>
@@ -320,8 +319,8 @@ export default function AboutPage() {
           {/* =========================================================
               GOALS
           ========================================================== */}
-          <div className="mt-28 bg-black px-6 py-12 text-white sm:px-10 lg:mt-36 lg:px-14 lg:py-16">
-            <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div className="mt-16 bg-black px-6 py-10 text-white sm:px-10 lg:mt-20 lg:px-14 lg:py-12">
+            <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
               <div>
                 <p className="mb-4 text-xs font-medium tracking-[0.32em] text-stone-400 uppercase">
                   OUR GOALS
@@ -343,9 +342,7 @@ export default function AboutPage() {
                     key={goal.number}
                     className="grid gap-4 py-7 first:pt-0 sm:grid-cols-[56px_1fr]"
                   >
-                    <p className="text-sm text-stone-400">
-                      {goal.number}
-                    </p>
+                    <p className="text-sm text-stone-400">{goal.number}</p>
 
                     <div>
                       <h4 className="text-xl font-light text-white sm:text-2xl">

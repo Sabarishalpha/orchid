@@ -26,7 +26,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative w-full bg-stone-50 px-4 py-20 sm:px-6 md:px-10 lg:px-16"
+      className="relative w-full bg-stone-50 px-4 py-14 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-16"
     >
       <div className="mx-auto max-w-7xl">
         {/* Label */}
@@ -36,13 +36,13 @@ export default function About() {
         ></p>
 
         {/* Main Layout - Grid */}
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           {/* Left Content */}
           <div className="flex flex-col justify-start">
             {/* Main Heading */}
             <h2
               data-about-title
-              className="mb-8 max-w-lg text-4xl font-light leading-tight text-black sm:text-5xl md:text-6xl"
+              className="mb-6 max-w-lg text-4xl font-light leading-tight text-black sm:text-5xl md:text-6xl"
             >
               Designing spaces
               <br />
@@ -52,13 +52,13 @@ export default function About() {
             {/* Description */}
             <p
               data-about-description
-              className="mb-10 max-w-lg text-base leading-8 text-stone-700 sm:text-lg md:text-xl"
+              className="mb-7 max-w-lg text-base leading-8 text-stone-700 sm:text-lg md:text-xl"
             >
               At Orchid Interiors, we create thoughtful spaces that balance
               architecture, functionality and timeless beauty.
             </p>
 
-            <p className="mb-12 max-w-lg text-base leading-8 text-stone-700 sm:text-lg md:text-xl">
+            <p className="mb-8 max-w-lg text-base leading-8 text-stone-700 sm:text-lg md:text-xl">
               Every project is shaped around the people who experience it,
               combining refined materials, intelligent planning and a distinct
               sense of identity.
@@ -110,7 +110,6 @@ export default function About() {
                       src={imagePath}
                       alt={`Orchid Interiors interior design ${index + 1}`}
                       fill
-                      priority={index === 0}
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover"
                     />
@@ -128,14 +127,14 @@ export default function About() {
         <div
           ref={ref}
           data-about-stats
-          className="mt-20 border-t border-stone-300 pt-16 sm:mt-24 md:mt-28"
+          className="mt-14 border-t border-stone-300 pt-10 sm:mt-16 md:mt-20"
         >
           {/* Statistics Heading */}
-          <h3 className="mb-12 text-center text-3xl font-light text-black sm:text-4xl md:text-5xl">
+          <h3 className="mb-8 text-center text-3xl font-light text-black sm:text-4xl md:text-5xl">
             The Measure of Excellence
           </h3>
 
-          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 md:gap-8 lg:gap-12">
             {/* Stat 1 */}
             <div className="flex flex-col items-center text-center sm:items-start sm:text-left md:items-center md:text-center">
               <div className="mb-3 text-4xl font-light text-black sm:text-5xl">
@@ -160,7 +159,7 @@ export default function About() {
               <div className="mb-3 text-4xl font-light text-black sm:text-5xl">
                 {inView ? (
                   <>
-                    <CountUp end={50} duration={2.5} />
+                    <CountUp end={800} duration={2.5} />
                     <span className="text-3xl sm:text-4xl">+</span>
                   </>
                 ) : (
@@ -217,17 +216,17 @@ export default function About() {
               <div className="mb-3 text-4xl font-light text-black sm:text-5xl">
                 {inView ? (
                   <>
-                    <CountUp end={500} duration={2.5} />
-                    <span className="text-3xl sm:text-4xl">+</span>
+                    <CountUp end={100} duration={2.5} />
+                    <span className="text-3xl sm:text-4xl">%</span>
                   </>
                 ) : (
                   <>
-                    0<span className="text-3xl sm:text-4xl">+</span>
+                    0<span className="text-3xl sm:text-4xl">%</span>
                   </>
                 )}
               </div>
               <p className="text-xs font-medium tracking-[0.1em] text-stone-600 sm:text-sm">
-                SATISFIED CLIENTS
+                Trusted
               </p>
             </div>
           </div>

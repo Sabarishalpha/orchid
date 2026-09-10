@@ -11,13 +11,7 @@ import {
   Sparkles,
   User,
 } from "lucide-react";
-import {
-  FormEvent,
-  KeyboardEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 type Message = {
   id: string;
@@ -78,19 +72,20 @@ export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([
-    INITIAL_MESSAGE,
-  ]);
+  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [isClosing, setIsClosing] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [leadForm, setLeadForm] = useState<LeadFormData>(EMPTY_LEAD);
-  const [leadStatus, setLeadStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [leadStatus, setLeadStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const messageIdRef = useRef(0);
+  const closeAnimationRef = useRef<gsap.core.Timeline | null>(null);
 
   const getMessageId = (suffix: string) =>
     `${++messageIdRef.current}-${suffix}`;
@@ -102,10 +97,16 @@ export default function ChatBot() {
     const timeline = gsap.timeline();
 
     if (reduceMotion.matches) {
-      timeline.set([overlayRef.current, panelRef.current], { clearProps: "all" });
+      timeline.set([overlayRef.current, panelRef.current], {
+        clearProps: "all",
+      });
     } else {
       timeline
-        .fromTo(overlayRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.24, ease: "power2.out" })
+        .fromTo(
+          overlayRef.current,
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.24, ease: "power2.out" },
+        )
         .fromTo(
           panelRef.current,
           { autoAlpha: 0, y: 24, scale: 0.97 },
@@ -128,6 +129,7 @@ export default function ChatBot() {
     }
 
     setIsClosing(true);
+    closeAnimationRef.current?.kill();
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     if (reduceMotion.matches) {
@@ -136,15 +138,34 @@ export default function ChatBot() {
       return;
     }
 
-    gsap.timeline({
-      onComplete: () => {
-        setIsOpen(false);
-        setIsClosing(false);
-      },
-    })
-      .to(panelRef.current, { autoAlpha: 0, y: 18, scale: 0.98, duration: 0.24, ease: "power2.in" })
-      .to(overlayRef.current, { autoAlpha: 0, duration: 0.2, ease: "power2.in" }, "<0.04");
+    closeAnimationRef.current = gsap
+      .timeline({
+        onComplete: () => {
+          closeAnimationRef.current = null;
+          setIsOpen(false);
+          setIsClosing(false);
+        },
+      })
+      .to(panelRef.current, {
+        autoAlpha: 0,
+        y: 18,
+        scale: 0.98,
+        duration: 0.24,
+        ease: "power2.in",
+      })
+      .to(
+        overlayRef.current,
+        { autoAlpha: 0, duration: 0.2, ease: "power2.in" },
+        "<0.04",
+      );
   };
+
+  useEffect(() => {
+    return () => {
+      closeAnimationRef.current?.kill();
+      closeAnimationRef.current = null;
+    };
+  }, []);
 
   /*
    * Auto scroll whenever messages change.
@@ -227,23 +248,17 @@ export default function ChatBot() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data?.error || "Unable to get a response."
-        );
+        throw new Error(data?.error || "Unable to get a response.");
       }
 
       const assistantMessage: Message = {
         id: getMessageId("assistant"),
         role: "assistant",
         content:
-          data?.reply ||
-          "I'm sorry, I couldn't generate a response right now.",
+          data?.reply || "I'm sorry, I couldn't generate a response right now.",
       };
 
-      setMessages((current) => [
-        ...current,
-        assistantMessage,
-      ]);
+      setMessages((current) => [...current, assistantMessage]);
     } catch (error) {
       console.error("Chatbot error:", error);
 
@@ -254,10 +269,7 @@ export default function ChatBot() {
           "I'm sorry, I'm having trouble connecting right now. Please try again or contact our design team directly.",
       };
 
-      setMessages((current) => [
-        ...current,
-        errorMessage,
-      ]);
+      setMessages((current) => [...current, errorMessage]);
     } finally {
       setIsTyping(false);
     }
@@ -275,13 +287,8 @@ export default function ChatBot() {
    * Enter = send
    * Shift + Enter = new line
    */
-  const handleKeyDown = (
-    event: KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       sendMessage();
     }
@@ -321,7 +328,8 @@ export default function ChatBot() {
         {
           id: getMessageId("lead"),
           role: "assistant",
-          content: "Thank you. Your enquiry is with our design team, and we will contact you shortly.",
+          content:
+            "Thank you. Your enquiry is with our design team, and we will contact you shortly.",
         },
       ]);
     } catch (error) {
@@ -399,9 +407,7 @@ export default function ChatBot() {
             />
           </span>
 
-          <span className="hidden text-sm font-medium sm:block">
-            Orchid AI
-          </span>
+          <span className="hidden text-sm font-medium sm:block">Orchid AI</span>
         </button>
       )}
 
@@ -422,9 +428,7 @@ export default function ChatBot() {
             sm:backdrop-blur-none
           "
           onMouseDown={(event) => {
-            if (
-              event.target === event.currentTarget
-            ) {
+            if (event.target === event.currentTarget) {
               closeChat();
             }
           }}
@@ -500,9 +504,7 @@ export default function ChatBot() {
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium">
-                      Orchid AI
-                    </p>
+                    <p className="text-sm font-medium">Orchid AI</p>
 
                     <span
                       className="
@@ -596,16 +598,13 @@ export default function ChatBot() {
                   </div>
 
                   <div className="grid gap-2">
-                    {QUICK_ACTIONS.map(
-                      (action) => (
-                        <button
-                          key={action}
-                          type="button"
-                          onClick={() =>
-                            sendMessage(action)
-                          }
-                          disabled={isTyping}
-                          className="
+                    {QUICK_ACTIONS.map((action) => (
+                      <button
+                        key={action}
+                        type="button"
+                        onClick={() => sendMessage(action)}
+                        disabled={isTyping}
+                        className="
                             rounded-xl
                             border
                             border-stone-200
@@ -622,11 +621,10 @@ export default function ChatBot() {
                             disabled:cursor-not-allowed
                             disabled:opacity-50
                           "
-                        >
-                          {action}
-                        </button>
-                      )
-                    )}
+                      >
+                        {action}
+                      </button>
+                    ))}
                     <button
                       type="button"
                       onClick={() => setShowLeadForm(true)}
@@ -643,8 +641,7 @@ export default function ChatBot() {
 
               <div className="space-y-4">
                 {messages.map((message) => {
-                  const isUser =
-                    message.role === "user";
+                  const isUser = message.role === "user";
 
                   return (
                     <div
@@ -652,11 +649,7 @@ export default function ChatBot() {
                       className={`
                         flex
                         gap-2.5
-                        ${
-                          isUser
-                            ? "justify-end"
-                            : "justify-start"
-                        }
+                        ${isUser ? "justify-end" : "justify-start"}
                       `}
                     >
                       {/* Assistant Icon */}
@@ -802,20 +795,30 @@ export default function ChatBot() {
             >
               {showLeadForm ? (
                 <form onSubmit={submitLead} className="grid gap-2">
-                  <p className="mb-1 text-xs font-medium text-stone-700">Tell us about your project</p>
-                  {([
-                    ["name", "Full name", "text"],
-                    ["phone", "Mobile number", "tel"],
-                    ["email", "Email address", "email"],
-                    ["location", "City / location", "text"],
-                    ["propertySize", "Approximate property size or BHK", "text"],
-                  ] as const).map(([field, placeholder, type]) => (
+                  <p className="mb-1 text-xs font-medium text-stone-700">
+                    Tell us about your project
+                  </p>
+                  {(
+                    [
+                      ["name", "Full name", "text"],
+                      ["phone", "Mobile number", "tel"],
+                      ["email", "Email address", "email"],
+                      ["location", "City / location", "text"],
+                      [
+                        "propertySize",
+                        "Approximate property size or BHK",
+                        "text",
+                      ],
+                    ] as const
+                  ).map(([field, placeholder, type]) => (
                     <input
                       key={field}
                       required
                       type={type}
                       value={leadForm[field]}
-                      onChange={(event) => updateLeadField(field, event.target.value)}
+                      onChange={(event) =>
+                        updateLeadField(field, event.target.value)
+                      }
                       placeholder={placeholder}
                       className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-xs text-black outline-none placeholder:text-stone-400 focus:border-stone-500"
                     />
@@ -823,7 +826,9 @@ export default function ChatBot() {
                   <select
                     required
                     value={leadForm.propertyType}
-                    onChange={(event) => updateLeadField("propertyType", event.target.value)}
+                    onChange={(event) =>
+                      updateLeadField("propertyType", event.target.value)
+                    }
                     className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-xs text-stone-700 outline-none focus:border-stone-500"
                   >
                     <option value="">Property type</option>
@@ -837,7 +842,9 @@ export default function ChatBot() {
                   <select
                     required
                     value={leadForm.interiorRequirement}
-                    onChange={(event) => updateLeadField("interiorRequirement", event.target.value)}
+                    onChange={(event) =>
+                      updateLeadField("interiorRequirement", event.target.value)
+                    }
                     className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-xs text-stone-700 outline-none focus:border-stone-500"
                   >
                     <option value="">Interior requirement</option>
@@ -855,7 +862,9 @@ export default function ChatBot() {
                   <select
                     required
                     value={leadForm.budget}
-                    onChange={(event) => updateLeadField("budget", event.target.value)}
+                    onChange={(event) =>
+                      updateLeadField("budget", event.target.value)
+                    }
                     className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-xs text-stone-700 outline-none focus:border-stone-500"
                   >
                     <option value="">Approximate budget</option>
@@ -869,7 +878,9 @@ export default function ChatBot() {
                   <select
                     required
                     value={leadForm.timeline}
-                    onChange={(event) => updateLeadField("timeline", event.target.value)}
+                    onChange={(event) =>
+                      updateLeadField("timeline", event.target.value)
+                    }
                     className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-xs text-stone-700 outline-none focus:border-stone-500"
                   >
                     <option value="">Preferred project timeline</option>
@@ -883,26 +894,36 @@ export default function ChatBot() {
                   <textarea
                     required
                     value={leadForm.message}
-                    onChange={(event) => updateLeadField("message", event.target.value)}
+                    onChange={(event) =>
+                      updateLeadField("message", event.target.value)
+                    }
                     placeholder="Tell us about your requirements"
                     rows={2}
                     className="resize-none rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-xs text-black outline-none placeholder:text-stone-400 focus:border-stone-500"
                   />
                   <button
                     type="submit"
-                    disabled={leadStatus === "submitting" || leadStatus === "success"}
+                    disabled={
+                      leadStatus === "submitting" || leadStatus === "success"
+                    }
                     className="mt-1 rounded-xl bg-black px-3 py-3 text-xs font-medium text-white transition-colors hover:bg-stone-800 disabled:opacity-50"
                   >
-                    {leadStatus === "submitting" ? "Sending..." : leadStatus === "success" ? "Enquiry sent" : "Send enquiry"}
+                    {leadStatus === "submitting"
+                      ? "Sending..."
+                      : leadStatus === "success"
+                        ? "Enquiry sent"
+                        : "Send enquiry"}
                   </button>
                   {leadStatus === "error" && (
-                    <p className="text-center text-[11px] text-red-600">Unable to send right now. Please try again.</p>
+                    <p className="text-center text-[11px] text-red-600">
+                      Unable to send right now. Please try again.
+                    </p>
                   )}
                 </form>
               ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="
+                <form
+                  onSubmit={handleSubmit}
+                  className="
                   flex
                   items-end
                   gap-2
@@ -914,18 +935,16 @@ export default function ChatBot() {
                   transition-colors
                   focus-within:border-stone-400
                 "
-              >
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={(event) =>
-                    setInput(event.target.value)
-                  }
-                  onKeyDown={handleKeyDown}
-                  rows={1}
-                  placeholder="Ask about your project..."
-                  disabled={isTyping}
-                  className="
+                >
+                  <textarea
+                    ref={inputRef}
+                    value={input}
+                    onChange={(event) => setInput(event.target.value)}
+                    onKeyDown={handleKeyDown}
+                    rows={1}
+                    placeholder="Ask about your project..."
+                    disabled={isTyping}
+                    className="
                     max-h-28
                     min-h-[42px]
                     flex-1
@@ -939,15 +958,13 @@ export default function ChatBot() {
                     placeholder:text-stone-400
                     disabled:opacity-50
                   "
-                />
+                  />
 
-                <button
-                  type="submit"
-                  disabled={
-                    !input.trim() || isTyping
-                  }
-                  aria-label="Send message"
-                  className="
+                  <button
+                    type="submit"
+                    disabled={!input.trim() || isTyping}
+                    aria-label="Send message"
+                    className="
                     flex
                     h-10
                     w-10
@@ -963,14 +980,14 @@ export default function ChatBot() {
                     disabled:cursor-not-allowed
                     disabled:opacity-30
                   "
-                >
-                  {isTyping ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <ArrowUp className="h-4 w-4" />
-                  )}
-                </button>
-              </form>
+                  >
+                    {isTyping ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ArrowUp className="h-4 w-4" />
+                    )}
+                  </button>
+                </form>
               )}
 
               <div className="mt-2 flex items-center justify-center gap-1 text-[9px] text-stone-400">

@@ -142,7 +142,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/elysian-4.jpg",
     ],
 
-    video: "/videos/projects/elysian.mp4",
   },
 
   {
@@ -164,7 +163,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/solara-4.jpg",
     ],
 
-    video: "/videos/projects/solara.mp4",
   },
 
   // ============================================================
@@ -210,7 +208,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/sasi (24).png"
     ],
 
-    video: "/videos/projects/sasi.mp4",
   },
 
   {
@@ -232,7 +229,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/atelier-4.jpg",
     ],
 
-    video: "/videos/projects/atelier.mp4",
   },
 
   {
@@ -254,7 +250,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/vertex-4.jpg",
     ],
 
-    video: "/videos/projects/vertex.mp4",
   },
 
   {
@@ -276,7 +271,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/nexa-4.jpg",
     ],
 
-    video: "/videos/projects/nexa.mp4",
   },
 
   // ============================================================
@@ -323,7 +317,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/Dr. Shankar (25).jpg",
     ],
 
-    video: "/videos/projects/monochrome.mp4",
   },
 
   {
@@ -345,7 +338,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/linear-4.jpg",
     ],
 
-    video: "/videos/projects/linear.mp4",
   },
 
   {
@@ -367,7 +359,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/minimalist-4.jpg",
     ],
 
-    video: "/videos/projects/minimalist.mp4",
   },
 
   {
@@ -389,7 +380,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/axis-4.jpg",
     ],
 
-    video: "/videos/projects/axis.mp4",
   },
 
   // ============================================================
@@ -426,7 +416,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/NOOR (15).PNG",
     ],
 
-    video: "/videos/projects/grand-residence.mp4",
   },
 
   {
@@ -448,7 +437,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/imperial-villa-4.jpg",
     ],
 
-    video: "/videos/projects/imperial-villa.mp4",
   },
 
   {
@@ -470,7 +458,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/royale-estate-4.jpg",
     ],
 
-    video: "/videos/projects/royale-estate.mp4",
   },
 
   {
@@ -492,7 +479,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/opulent-house-4.jpg",
     ],
 
-    video: "/videos/projects/opulent-house.mp4",
   },
 
   // ============================================================
@@ -527,7 +513,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/sengeetha (14).png",
     ],
 
-    video: "/videos/projects/luxe-hotel.mp4",
   },
 
   {
@@ -549,7 +534,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/grand-resort-4.jpg",
     ],
 
-    video: "/videos/projects/grand-resort.mp4",
   },
   // ============================================================
   // Institute — 2 PROJECTS
@@ -580,7 +564,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/kongu (11).png",
     ],
 
-    video: "/videos/projects/elite-academy.mp4",
   },
 
   {
@@ -602,7 +585,31 @@ export const PROJECTS: Project[] = [
       "/images/projects/knowledge-hub-4.jpg",
     ],
 
-    video: "/videos/projects/knowledge-hub.mp4",
   },
 
 ];
+
+const missingProjectAssetPrefixes = [
+  "atelier",
+  "axis",
+  "elysian",
+  "grand-resort",
+  "imperial-villa",
+  "knowledge-hub",
+  "linear",
+  "minimalist",
+  "nexa",
+  "opulent-house",
+  "royale-estate",
+  "solara",
+  "vertex",
+];
+
+export function resolveProjectAsset(path: string) {
+  const filename = path.split("/").pop() ?? "";
+  const baseName = filename.replace(/\.jpg$/, "").replace(/-\d+$/, "");
+
+  return missingProjectAssetPrefixes.includes(baseName)
+    ? "/images/projects/1.png"
+    : path;
+}

@@ -505,7 +505,6 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
                 src={images[selectedIndex]}
                 alt={`${title} detail ${selectedIndex + 1}`}
                 fill
-                priority
                 className="
                   object-contain
                   transition-transform

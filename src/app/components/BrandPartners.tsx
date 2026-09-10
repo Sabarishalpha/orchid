@@ -76,11 +76,7 @@ const brands = [
   },
 ];
 
-function BrandCard({
-  brand,
-}: {
-  brand: (typeof brands)[number];
-}) {
+function BrandCard({ brand }: { brand: (typeof brands)[number] }) {
   return (
     <div
       className="
@@ -189,7 +185,7 @@ export default function BrandPartners() {
           duration: 34,
           ease: "none",
           repeat: -1,
-        }
+        },
       );
     }, section);
 
@@ -202,10 +198,10 @@ export default function BrandPartners() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#f7f7f5] py-24 sm:py-32"
+      className="relative overflow-hidden bg-[#f7f7f5] py-16 sm:py-20"
     >
       {/* Header */}
-      <div className="brand-heading mx-auto mb-16 max-w-5xl px-6 text-center">
+      <div className="brand-heading mx-auto mb-10 max-w-5xl px-6 text-center">
         <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.35em] text-black/45 sm:text-xs">
           Our Brand Partners
         </p>
@@ -215,8 +211,8 @@ export default function BrandPartners() {
         </h2>
 
         <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-black/50 sm:text-base">
-          We partner with some of the world&apos;s most trusted names to
-          deliver uncompromising quality, performance and timeless design.
+          We partner with some of the world&apos;s most trusted names to deliver
+          uncompromising quality, performance and timeless design.
         </p>
       </div>
 
@@ -242,10 +238,7 @@ export default function BrandPartners() {
 
       {/* Row 1 */}
       <div className="mb-5 overflow-hidden">
-        <div
-          ref={rowOneRef}
-          className="flex w-max gap-5 will-change-transform"
-        >
+        <div ref={rowOneRef} className="flex w-max gap-5 will-change-transform">
           {[...rowOneBrands, ...rowOneBrands].map((brand, index) => (
             <div className="brand-card" key={`${brand.name}-one-${index}`}>
               <BrandCard brand={brand} />
@@ -256,10 +249,7 @@ export default function BrandPartners() {
 
       {/* Row 2 */}
       <div className="overflow-hidden">
-        <div
-          ref={rowTwoRef}
-          className="flex w-max gap-5 will-change-transform"
-        >
+        <div ref={rowTwoRef} className="flex w-max gap-5 will-change-transform">
           {[...rowTwoBrands, ...rowTwoBrands].map((brand, index) => (
             <div className="brand-card" key={`${brand.name}-two-${index}`}>
               <BrandCard brand={brand} />

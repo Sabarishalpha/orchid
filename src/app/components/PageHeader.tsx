@@ -14,7 +14,7 @@ export default function PageHeader({
   description,
 }: PageHeaderProps) {
   return (
-    <section className="relative h-72 w-full overflow-hidden bg-stone-900 sm:h-80 lg:h-96">
+    <section className="relative h-64 w-full overflow-hidden bg-stone-900 sm:h-72 lg:h-80">
       <Image
         src={image}
         alt={imageAlt}

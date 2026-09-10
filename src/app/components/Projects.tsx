@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { PROJECTS } from "../data/projects";
+import { PROJECTS, resolveProjectAsset } from "../data/projects";
 
 const CATEGORIES = [
   "Residential",
@@ -44,13 +44,13 @@ export default function Projects() {
         overflow-hidden
         bg-stone-50
         px-4
-        py-20
+        py-14
         sm:px-6
-        sm:py-24
+        sm:py-16
         md:px-10
-        md:py-28
+        md:py-20
         lg:px-16
-        lg:py-32
+        lg:py-24
       "
     >
       <div className="mx-auto max-w-[1600px]">
@@ -60,11 +60,11 @@ export default function Projects() {
 
         <div
           className="
-            mb-14
+            mb-10
             text-center
-            sm:mb-16
-            md:mb-20
-            lg:mb-24
+            sm:mb-12
+            md:mb-14
+            lg:mb-16
           "
         >
           <p
@@ -234,7 +234,7 @@ export default function Projects() {
             lg:gap-8
           "
         >
-          {filteredProjects.map((project, index) => {
+          {filteredProjects.map((project) => {
             const aspectRatio = project.width / project.height;
 
             return (
@@ -271,10 +271,9 @@ export default function Projects() {
                   "
                 >
                   <Image
-                    src={project.image}
+                    src={resolveProjectAsset(project.image)}
                     alt={project.title}
                     fill
-                    priority={index === 0}
                     className="
                       object-cover
                       transition-transform
@@ -465,7 +464,7 @@ export default function Projects() {
             VIEW ALL PROJECTS
         ====================================================== */}
 
-        <div className="mt-14 flex items-center justify-center md:mt-20">
+        <div className="mt-10 flex items-center justify-center md:mt-14">
           <Link
             href="/projects"
             className="
