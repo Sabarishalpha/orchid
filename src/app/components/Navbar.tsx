@@ -492,13 +492,6 @@ export default function Navbar() {
                 "
               >
                 <div>
-                  <p
-                    className="
-                      text-[10px]
-                      uppercase
-                      tracking-[0.18em]
-                      text-black/40
-                    "
                   <p className="mt-1 text-[18px] font-medium">
                     Talk to an Expert
                   </p>
