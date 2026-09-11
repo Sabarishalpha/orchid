@@ -499,10 +499,6 @@ export default function Navbar() {
                       tracking-[0.18em]
                       text-black/40
                     "
-                  >
-                    Let&apos;s create
-                  </p>
-
                   <p className="mt-1 text-[18px] font-medium">
                     Talk to an Expert
                   </p>
