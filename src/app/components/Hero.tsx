@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
+import { useConsultationModal } from "./ConsultationModalProvider";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -19,6 +19,8 @@ const HERO_IMAGES = [
 ];
 
 export default function Hero() {
+  const { openModal } = useConsultationModal();
+
   return (
     <section
       id="hero"
@@ -93,19 +95,20 @@ export default function Hero() {
             </p>
 
             <div className="mt-10">
-              <Link
-                href="/projects"
+              <button
+                type="button"
+                onClick={openModal}
                 data-hero-cta
                 className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 text-sm font-medium tracking-[0.04em] text-black transition-all duration-300 hover:bg-black hover:text-white sm:px-8 sm:py-4 sm:text-base"
               >
-                Explore Projects
+                Talk to an Expert
                 <span
                   aria-hidden="true"
                   className="transition-transform duration-300 group-hover:translate-x-1"
                 >
                   →
                 </span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>

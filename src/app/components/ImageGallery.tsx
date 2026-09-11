@@ -14,9 +14,14 @@ import { useCallback, useEffect, useState } from "react";
 type ImageGalleryProps = {
   images: readonly string[];
   title: string;
+  layout?: "default" | "design-library";
 };
 
-export default function ImageGallery({ images, title }: ImageGalleryProps) {
+export default function ImageGallery({
+  images,
+  title,
+  layout = "default",
+}: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const [zoom, setZoom] = useState(1);
@@ -130,12 +135,23 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
           GALLERY GRID
       ====================================================== */}
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
+      <div
+        className={`grid grid-cols-1 gap-4 sm:gap-5 ${
+          layout === "design-library"
+            ? "sm:grid-cols-2"
+            : "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        }`}
+      >
         {images.map((image, index) => (
           <button
             key={image}
             type="button"
             onClick={() => openGallery(index)}
+            style={
+              layout === "design-library"
+                ? { aspectRatio: "16 / 9" }
+                : undefined
+            }
             className={`
               group
               relative
@@ -146,9 +162,11 @@ export default function ImageGallery({ images, title }: ImageGalleryProps) {
               focus-visible:ring-2
               focus-visible:ring-black
               ${
-                index === 0
-                  ? "aspect-16/10 sm:col-span-2 md:col-span-2"
-                  : "aspect-16/10"
+                layout === "design-library"
+                  ? "w-full"
+                  : index === 0
+                    ? "aspect-16/10 sm:col-span-2 md:col-span-2"
+                    : "aspect-16/10"
               }
             `}
             aria-label={`Open ${title} image ${index + 1}`}

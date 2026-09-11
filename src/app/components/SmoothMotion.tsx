@@ -25,7 +25,7 @@ export default function SmoothMotion() {
 
     setupTimeout = window.setTimeout(() => {
       const sections = gsap.utils.toArray<HTMLElement>(
-        "main > section, main > footer, body > section, body > footer",
+        "main:not([data-library-page]) > section, main:not([data-library-page]) > footer, body > section, body > footer",
       );
       sectionAnimations = sections.map((section) =>
         gsap.fromTo(

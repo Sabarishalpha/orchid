@@ -17,13 +17,20 @@ const CATEGORIES = [
 
 type CategoryType = (typeof CATEGORIES)[number];
 
-export default function Projects() {
+type ProjectsProps = {
+  projectLimit?: number;
+};
+
+export default function Projects({ projectLimit }: ProjectsProps) {
   const [activeCategory, setActiveCategory] =
     useState<CategoryType>("Residential");
 
   const filteredProjects = PROJECTS.filter(
     (project) => project.category === activeCategory,
   );
+  const visibleProjects = projectLimit
+    ? filteredProjects.slice(0, projectLimit)
+    : filteredProjects;
 
   /*
    * Re-run your project animation after category changes.
@@ -82,12 +89,12 @@ export default function Projects() {
             Our Projects
           </p>
 
-          <h2
+          <h5
             data-projects-title
             className="
               mx-auto
               mb-7
-              max-w-3xl
+              max-w-4xl
               text-4xl
               font-light
               leading-[1.05]
@@ -98,10 +105,8 @@ export default function Projects() {
               lg:text-7xl
             "
           >
-            Spaces we&apos;ve
-            <br />
-            brought to life.
-          </h2>
+            Spaces we&apos;ve brought to life.
+          </h5>
 
           <p
             data-projects-description
@@ -234,7 +239,7 @@ export default function Projects() {
             lg:gap-8
           "
         >
-          {filteredProjects.map((project) => {
+          {visibleProjects.map((project) => {
             const aspectRatio = project.width / project.height;
 
             return (
@@ -433,7 +438,7 @@ export default function Projects() {
             EMPTY STATE
         ====================================================== */}
 
-        {filteredProjects.length === 0 && (
+        {visibleProjects.length === 0 && (
           <div
             className="
               flex
@@ -457,7 +462,7 @@ export default function Projects() {
         <div className="mt-8 flex justify-between text-[10px] uppercase tracking-[0.2em] text-stone-400">
           <span>{activeCategory}</span>
 
-          <span>{filteredProjects.length} Projects</span>
+          <span>{visibleProjects.length} Projects</span>
         </div>
 
         {/* =====================================================

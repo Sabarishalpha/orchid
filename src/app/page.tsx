@@ -20,8 +20,7 @@ export default function Home() {
         <FeaturedProjects />
         <BrandPartners />
         <VideoShowcase />
-        <Projects />
-        
+        <Projects projectLimit={2} />
       </main>
 
       <Footer />
