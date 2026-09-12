@@ -43,7 +43,7 @@ export default function ServicesPage() {
         image="/images/services.jpg"
         imageAlt="Refined residential interior designed by Orchid Interiors"
       />
-      <Services showAll />
+      <Services />
 
       <section className="relative w-full bg-stone-50 px-4 py-14 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-16">
         <div className="mx-auto max-w-7xl">

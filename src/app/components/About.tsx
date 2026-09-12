@@ -26,7 +26,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative w-full bg-stone-50 px-4 py-14 sm:px-6 sm:py-16 md:px-10 md:py-20 lg:px-16"
+      className="relative w-full bg-stone-50 px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-16"
     >
       <div className="mx-auto max-w-7xl">
         {/* Label */}
@@ -127,10 +127,10 @@ export default function About() {
         <div
           ref={ref}
           data-about-stats
-          className="mt-14 border-t border-stone-300 pt-10 sm:mt-16 md:mt-20"
+          className="mt-10 border-t border-stone-300 pt-8 sm:mt-12 md:mt-14 md:pt-10"
         >
           {/* Statistics Heading */}
-          <h3 className="mb-8 text-center text-3xl font-light text-black sm:text-4xl md:text-5xl">
+          <h3 className="mb-6 text-center text-3xl font-light text-black sm:mb-7 sm:text-4xl md:mb-8 md:text-5xl">
             The Measure of Excellence
           </h3>
 
