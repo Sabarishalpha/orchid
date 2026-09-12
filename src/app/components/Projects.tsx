@@ -9,7 +9,6 @@ import { PROJECTS, resolveProjectAsset } from "../data/projects";
 const CATEGORIES = [
   "Residential",
   "Commercial",
-  "Modern",
   "Hospitality",
   "Institute",
   "Luxury",

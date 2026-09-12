@@ -1,7 +1,6 @@
 export type ProjectCategory =
   | "Residential"
   | "Commercial"
-  | "Modern"
   | "Hospitality"
   | "Institute"
   | "Luxury";
@@ -269,115 +268,6 @@ export const PROJECTS: Project[] = [
       "/images/projects/nexa-2.jpg",
       "/images/projects/nexa-3.jpg",
       "/images/projects/nexa-4.jpg",
-    ],
-
-  },
-
-  // ============================================================
-  // MODERN — 4 PROJECTS
-  // ============================================================
-
-  {
-    id: 11,
-    number: "01",
-    title: "Monochrome House",
-    slug: "monochrome-house",
-    category: "Modern",
-    location: "Bangalore",
-
-    image: "/images/projects/Dr. Shankar (1).jpg",
-    width: 1920 ,
-    height: 1080 ,
-
-    gallery: [
-      "/images/projects/Dr. Shankar (1).jpg",
-      "/images/projects/Dr. Shankar (2).jpg",
-      "/images/projects/Dr. Shankar (3).jpg",
-      "/images/projects/Dr. Shankar (4).jpg",
-      "/images/projects/Dr. Shankar (5).jpg",
-      "/images/projects/Dr. Shankar (6).jpg",
-      "/images/projects/Dr. Shankar (7).jpg",
-      "/images/projects/Dr. Shankar (8).jpg",
-      "/images/projects/Dr. Shankar (9).jpg",
-      "/images/projects/Dr. Shankar (10).jpg",
-      "/images/projects/Dr. Shankar (11).jpg",
-      "/images/projects/Dr. Shankar (12).jpg",
-      "/images/projects/Dr. Shankar (13).jpg",
-      "/images/projects/Dr. Shankar (14).jpg",
-      "/images/projects/Dr. Shankar (15).jpg",
-      "/images/projects/Dr. Shankar (16).jpg",
-      "/images/projects/Dr. Shankar (17).jpg",
-      "/images/projects/Dr. Shankar (18).jpg",
-      "/images/projects/Dr. Shankar (19).jpg",
-      "/images/projects/Dr. Shankar (20).jpg",
-      "/images/projects/Dr. Shankar (21).jpg",
-      "/images/projects/Dr. Shankar (22).jpg",
-      "/images/projects/Dr. Shankar (23).jpg",
-      "/images/projects/Dr. Shankar (24).jpg",
-      "/images/projects/Dr. Shankar (25).jpg",
-    ],
-
-  },
-
-  {
-    id: 12,
-    number: "02",
-    title: "The Linear Residence",
-    slug: "linear-residence",
-    category: "Modern",
-    location: "Chennai",
-
-    image: "/images/projects/linear.jpg",
-    width: 1920 ,
-    height: 1080 ,
-
-    gallery: [
-      "/images/projects/linear.jpg",
-      "/images/projects/linear-2.jpg",
-      "/images/projects/linear-3.jpg",
-      "/images/projects/linear-4.jpg",
-    ],
-
-  },
-
-  {
-    id: 13,
-    number: "03",
-    title: "The Minimalist Home",
-    slug: "minimalist-home",
-    category: "Modern",
-    location: "Coimbatore",
-
-    image: "/images/projects/minimalist.jpg",
-    width: 1920 ,
-    height: 1080 ,
-
-    gallery: [
-      "/images/projects/minimalist.jpg",
-      "/images/projects/minimalist-2.jpg",
-      "/images/projects/minimalist-3.jpg",
-      "/images/projects/minimalist-4.jpg",
-    ],
-
-  },
-
-  {
-    id: 14,
-    number: "04",
-    title: "Axis Residence",
-    slug: "axis-residence",
-    category: "Modern",
-    location: "Bangalore",
-
-    image: "/images/projects/axis.jpg",
-    width: 1920 ,
-    height: 1080 ,
-
-    gallery: [
-      "/images/projects/axis.jpg",
-      "/images/projects/axis-2.jpg",
-      "/images/projects/axis-3.jpg",
-      "/images/projects/axis-4.jpg",
     ],
 
   },
